@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Alert, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 import {useNavigationTheme} from '../context/NavigationThemeContext';
 import {Ingredient, Step} from '../utils/types';
@@ -9,7 +9,7 @@ import {createNewRecipe, saveRecipe} from '../utils/recipeUtils';
 
 // Components
 import Header from '../components/Header';
-import ImagePicker from '../components/ImagePicker';
+import ImagePickerComponent from '../components/ImagePicker';
 import IngredientList from '../components/IngredientList';
 import StepList from '../components/StepList';
 
@@ -201,7 +201,7 @@ export default function AddRecipeScreen({navigation}) {
                             </View>
                         </View>
                         <TouchableOpacity style={styles.secondaryButton} onPress={addIngredient}>
-                            <Icon name="plus" size={16} color={colors.secondaryForeground}/>
+                            <Feather name="plus" size={16} color={colors.secondaryForeground}/>
                             <Text style={styles.secondaryButtonText}>Add Ingredient</Text>
                         </TouchableOpacity>
 
@@ -225,7 +225,7 @@ export default function AddRecipeScreen({navigation}) {
                             multiline
                         />
                         <TouchableOpacity style={styles.secondaryButton} onPress={addStep}>
-                            <Icon name="plus" size={16} color={colors.secondaryForeground}/>
+                            <Feather name="plus" size={16} color={colors.secondaryForeground}/>
                             <Text style={styles.secondaryButtonText}>Add Step</Text>
                         </TouchableOpacity>
 
@@ -242,7 +242,7 @@ export default function AddRecipeScreen({navigation}) {
 
                     <View style={styles.formSection}>
                         <Text style={styles.label}>Recipe Image</Text>
-                        <ImagePicker
+                        <ImagePickerComponent
                             image={image}
                             onImageSelected={setImage}
                             onImageRemoved={() => setImage(undefined)}

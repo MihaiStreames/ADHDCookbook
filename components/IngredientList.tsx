@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import CheckBox from 'react-native-checkbox';
+import {Feather} from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
 import {useTheme} from '../context/ThemeContext';
 import {Ingredient} from '../utils/types';
 
@@ -52,7 +52,7 @@ const IngredientList = ({
                             onPress={() => onRemove?.(index)}
                             style={styles.iconButton}
                         >
-                            <Icon name="x" size={20} color={colors.foreground}/>
+                            <Feather name="x" size={20} color={colors.foreground}/>
                         </TouchableOpacity>
                     </View>
                 ))}
@@ -65,10 +65,10 @@ const IngredientList = ({
             <View>
                 {ingredients.map((ingredient) => (
                     <View key={ingredient.id} style={styles.ingredientCheckItem}>
-                        <CheckBox
-                            checked={ingredient.checked}
-                            onChange={() => onToggleCheck?.(ingredient.id)}
-                            checkBoxColor={ingredient.checked ? colors.accent : undefined}
+                        <Checkbox
+                            value={ingredient.checked}
+                            onValueChange={() => onToggleCheck?.(ingredient.id)}
+                            color={ingredient.checked ? colors.accent : undefined}
                         />
                         <Text
                             style={[

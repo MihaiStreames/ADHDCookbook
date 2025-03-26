@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 import {useNavigationTheme} from '../context/NavigationThemeContext';
 import {Ingredient, Recipe, Step} from '../utils/types';
@@ -120,7 +120,7 @@ export default function RecipeDetailScreen({route, navigation}) {
                     onBackPress={() => navigation.goBack()}
                     rightComponent={
                         <TouchableOpacity onPress={handleDelete} style={styles.iconButton}>
-                            <Icon name="trash-2" size={24} color={colors.destructive}/>
+                            <Feather name="trash-2" size={24} color={colors.destructive}/>
                         </TouchableOpacity>
                     }
                 />
@@ -137,13 +137,13 @@ export default function RecipeDetailScreen({route, navigation}) {
                     <View style={{flexDirection: 'row', gap: 24, marginVertical: 16}}>
                         {recipe.prepTime && (
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Icon name="clock" size={16} color={colors.mutedForeground}/>
+                                <Feather name="clock" size={16} color={colors.mutedForeground}/>
                                 <Text style={styles.mutedText}>Prep: {recipe.prepTime} min</Text>
                             </View>
                         )}
                         {recipe.cookTime && (
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Icon name="clock" size={16} color={colors.mutedForeground}/>
+                                <Feather name="clock" size={16} color={colors.mutedForeground}/>
                                 <Text style={styles.mutedText}>Cook: {recipe.cookTime} min</Text>
                             </View>
                         )}

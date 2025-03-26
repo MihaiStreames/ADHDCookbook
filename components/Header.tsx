@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 
 type HeaderProps = {
@@ -26,7 +26,7 @@ const Header = ({
                         onPress={onBackPress}
                         style={styles.iconButton}
                     >
-                        <Icon name="arrow-left" size={24} color={colors.foreground}/>
+                        <Feather name="arrow-left" size={24} color={colors.foreground}/>
                     </TouchableOpacity>
                 )}
                 <Text style={showBackButton ? styles.smallTitle : styles.title} numberOfLines={1}>

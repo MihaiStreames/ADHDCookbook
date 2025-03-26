@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import CheckBox from 'expo-checkbox';
+import Checkbox from 'expo-checkbox';
 import {useTheme} from '../context/ThemeContext';
 import {Ingredient, Step} from '../utils/types';
 import StepItem from './StepItem';
@@ -68,7 +68,7 @@ const StepList = ({
                         ]}
                     >
                         <View style={styles.stepContent}>
-                            <CheckBox
+                            <Checkbox
                                 value={step.checked}
                                 onValueChange={() => onToggleCheck?.(step.id)}
                                 color={step.checked ? colors.accent : undefined}

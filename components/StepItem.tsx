@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import CheckBox from 'react-native-checkbox';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {Alert, Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Feather} from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
+import * as ImagePicker from 'expo-image-picker';
 import {useTheme} from '../context/ThemeContext';
 import {Ingredient, Step} from '../utils/types';
 
@@ -34,25 +34,29 @@ const StepItem = ({step, index, ingredients, onRemove, onUpdateStep}: StepItemPr
     };
 
     const pickStepImage = async () => {
-        launchImageLibrary({
-            mediaType: 'photo',
-            includeBase64: true,
-            quality: 0.7,
-        }, (response) => {
-            if (response.didCancel) {
-                return;
-            } else if (response.errorCode) {
-                console.error('Error picking image:', response.errorMessage);
-                return;
-            }
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-            if (response.assets && response.assets[0] && response.assets[0].base64) {
+        if (!permissionResult.granted) {
+            Alert.alert('Permission Required', 'You need to grant camera roll permissions to upload images');
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.7,
+            base64: true,
+        });
+
+        if (!result.canceled && result.assets && result.assets[0]) {
+            if (result.assets[0].base64) {
                 onUpdateStep({
                     ...step,
-                    stepImage: `data:image/jpeg;base64,${response.assets[0].base64}`
+                    stepImage: `data:image/jpeg;base64,${result.assets[0].base64}`
                 });
             }
-        });
+        }
     };
 
     const removeStepImage = () => {
@@ -103,20 +107,20 @@ const StepItem = ({step, index, ingredients, onRemove, onUpdateStep}: StepItemPr
                         onPress={() => setIsEditing(true)}
                         style={{marginRight: 12}}
                     >
-                        <Icon name="edit-2" size={16} color={colors.foreground}/>
+                        <Feather name="edit-2" size={16} color={colors.foreground}/>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => setIsLinking(!isLinking)}
                         style={{marginRight: 12}}
                     >
-                        <Icon
+                        <Feather
                             name="link"
                             size={16}
                             color={isLinking ? colors.accent : colors.foreground}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onRemove}>
-                        <Icon name="x" size={16} color={colors.foreground}/>
+                        <Feather name="x" size={16} color={colors.foreground}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -133,7 +137,7 @@ const StepItem = ({step, index, ingredients, onRemove, onUpdateStep}: StepItemPr
                         style={styles.removeButton}
                         onPress={removeStepImage}
                     >
-                        <Icon name="x" size={16} color="#ffffff"/>
+                        <Feather name="x" size={16} color="#ffffff"/>
                     </TouchableOpacity>
                 </View>
             ) : (
@@ -144,7 +148,7 @@ const StepItem = ({step, index, ingredients, onRemove, onUpdateStep}: StepItemPr
                     ]}
                     onPress={pickStepImage}
                 >
-                    <Icon name="image" size={24} color={colors.icon}/>
+                    <Feather name="image" size={24} color={colors.icon}/>
                     <Text style={{color: colors.mutedForeground, marginTop: 8}}>
                         Add Step Image
                     </Text>
@@ -173,10 +177,10 @@ const StepItem = ({step, index, ingredients, onRemove, onUpdateStep}: StepItemPr
                     <Text style={styles.linkingTitle}>Link ingredients to this step:</Text>
                     {ingredients.map(ingredient => (
                         <View key={ingredient.id} style={styles.linkingItem}>
-                            <CheckBox
-                                checked={step.linkedIngredientIds.includes(ingredient.id)}
-                                onChange={() => toggleIngredientLink(ingredient.id)}
-                                checkBoxColor={step.linkedIngredientIds.includes(ingredient.id) ? colors.accent : undefined}
+                            <Checkbox
+                                value={step.linkedIngredientIds.includes(ingredient.id)}
+                                onValueChange={() => toggleIngredientLink(ingredient.id)}
+                                color={step.linkedIngredientIds.includes(ingredient.id) ? colors.accent : undefined}
                             />
                             <Text style={styles.linkingText}>{ingredient.name}</Text>
                         </View>

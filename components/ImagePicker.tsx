@@ -1,7 +1,7 @@
 import React from 'react';
 import {Alert, Image, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {Feather} from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import {useTheme} from '../context/ThemeContext';
 
 type ImagePickerProps = {
@@ -12,32 +12,36 @@ type ImagePickerProps = {
     height?: number;
 };
 
-const ImagePicker = ({
-                         image,
-                         onImageSelected,
-                         onImageRemoved,
-                         placeholder = 'Add Photo',
-                         height = 200
-                     }: ImagePickerProps) => {
+const ImagePickerComponent = ({
+                                  image,
+                                  onImageSelected,
+                                  onImageRemoved,
+                                  placeholder = 'Add Photo',
+                                  height = 200
+                              }: ImagePickerProps) => {
     const {styles, colors} = useTheme();
 
     const pickImage = async () => {
-        launchImageLibrary({
-            mediaType: 'photo',
-            includeBase64: true,
-            quality: 0.7,
-        }, (response) => {
-            if (response.didCancel) {
-                return;
-            } else if (response.errorCode) {
-                Alert.alert('Error', response.errorMessage || 'Unknown error occurred');
-                return;
-            }
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-            if (response.assets && response.assets[0] && response.assets[0].base64) {
-                onImageSelected(`data:image/jpeg;base64,${response.assets[0].base64}`);
-            }
+        if (!permissionResult.granted) {
+            Alert.alert('Permission Required', 'You need to grant camera roll permissions to upload images');
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.7,
+            base64: true,
         });
+
+        if (!result.canceled && result.assets && result.assets[0]) {
+            if (result.assets[0].base64) {
+                onImageSelected(`data:image/jpeg;base64,${result.assets[0].base64}`);
+            }
+        }
     };
 
     if (image) {
@@ -52,7 +56,7 @@ const ImagePicker = ({
                     style={styles.removeButton}
                     onPress={onImageRemoved}
                 >
-                    <Icon name="x" size={16} color="#ffffff"/>
+                    <Feather name="x" size={16} color="#ffffff"/>
                 </TouchableOpacity>
             </View>
         );
@@ -63,7 +67,7 @@ const ImagePicker = ({
             style={[styles.imageContainer, {height, justifyContent: 'center'}]}
             onPress={pickImage}
         >
-            <Icon
+            <Feather
                 name="image"
                 size={40}
                 color={colors.placeholderText}
@@ -74,4 +78,4 @@ const ImagePicker = ({
     );
 };
 
-export default ImagePicker;
+export default ImagePickerComponent;

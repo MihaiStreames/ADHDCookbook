@@ -3,6 +3,9 @@
 # Dependencies
 node_modules/
 
+# Expo
+/.expo
+
 # JetBrains
 .idea
 

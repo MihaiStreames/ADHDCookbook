@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 import {Recipe} from '../utils/types';
 
@@ -26,7 +26,7 @@ const RecipeCard = ({recipe, onPress}: RecipeCardProps) => {
                     />
                 ) : (
                     <View style={[styles.recipeImage, {justifyContent: 'center', alignItems: 'center'}]}>
-                        <Icon name="image" size={40} color={colors.icon}/>
+                        <Feather name="image" size={40} color={colors.icon}/>
                     </View>
                 )}
             </View>
@@ -35,13 +35,13 @@ const RecipeCard = ({recipe, onPress}: RecipeCardProps) => {
                 <View style={styles.recipeDetails}>
                     {recipe.prepTime && (
                         <View style={styles.recipeDetail}>
-                            <Icon name="clock" size={14} color={colors.mutedForeground}/>
+                            <Feather name="clock" size={14} color={colors.mutedForeground}/>
                             <Text style={styles.recipeDetailText}>Prep: {recipe.prepTime} min</Text>
                         </View>
                     )}
                     {recipe.cookTime && (
                         <View style={styles.recipeDetail}>
-                            <Icon name="clock" size={14} color={colors.mutedForeground}/>
+                            <Feather name="clock" size={14} color={colors.mutedForeground}/>
                             <Text style={styles.recipeDetailText}>Cook: {recipe.cookTime} min</Text>
                         </View>
                     )}

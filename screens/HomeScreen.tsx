@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 import {useNavigationTheme} from '../context/NavigationThemeContext';
 import {Recipe} from '../utils/types';
@@ -42,7 +42,7 @@ export default function HomeScreen({navigation}) {
 
     const renderEmptyState = () => (
         <View style={styles.emptyContainer}>
-            <Icon name="book-open" size={64} color={colors.icon}/>
+            <Feather name="book-open" size={64} color={colors.icon}/>
             <Text style={styles.emptyText}>
                 No recipes yet. Tap the + button to add your first recipe!
             </Text>
@@ -61,7 +61,7 @@ export default function HomeScreen({navigation}) {
                             onPress={() => setShowThemeOptions(!showThemeOptions)}
                             style={styles.iconButton}
                         >
-                            <Icon
+                            <Feather
                                 name={theme === 'dark' ? 'sun' : 'moon'}
                                 size={24}
                                 color={colors.foreground}
@@ -96,7 +96,7 @@ export default function HomeScreen({navigation}) {
                     style={styles.fab}
                     onPress={() => navigation.navigate('AddRecipe')}
                 >
-                    <Icon name="plus" size={24} color={colors.accentForeground}/>
+                    <Feather name="plus" size={24} color={colors.accentForeground}/>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
