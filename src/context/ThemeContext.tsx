@@ -30,8 +30,6 @@ const ThemeContext = createContext<ThemeContextType>({
 // Custom hook for using theme
 export const useTheme = () => useContext(ThemeContext);
 
-export default ThemeContext;
-
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const systemColorScheme = useColorScheme() as ThemeType || 'dark';
     const [theme, setTheme] = useState<ThemeType>('dark');
