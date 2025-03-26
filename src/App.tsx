@@ -8,8 +8,10 @@ import HomeScreen from './screens/HomeScreen';
 import AddRecipeScreen from './screens/AddRecipeScreen';
 import RecipeDetailScreen from './screens/RecipeDetailScreen';
 
-// Theme provider
+// Theme providers
 import {ThemeProvider, useTheme} from './context/ThemeContext';
+import {AppLoadingProvider} from './context/AppLoadingContext';
+import {NavigationThemeProvider} from './context/NavigationThemeContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,12 +23,12 @@ const AppNavigator = () => {
     const navigationTheme = {
         dark: theme === 'dark',
         colors: {
-            primary: colors.accentBlue,
+            primary: colors.primary,
             background: colors.background,
             card: colors.card,
             text: colors.foreground,
             border: colors.border,
-            notification: colors.accentBlue,
+            notification: colors.accentPrimary,
         },
     };
 
@@ -37,6 +39,11 @@ const AppNavigator = () => {
                 initialRouteName="Home"
                 screenOptions={{
                     headerShown: false,
+                    contentStyle: {backgroundColor: colors.background},
+                    animation: 'fade_from_bottom',
+                    animationDuration: 200,
+                    // This prevents the white flash during transitions
+                    presentation: 'card',
                 }}
             >
                 <Stack.Screen name="Home" component={HomeScreen}/>
@@ -51,7 +58,11 @@ const AppNavigator = () => {
 export default function App() {
     return (
         <ThemeProvider>
-            <AppNavigator/>
+            <AppLoadingProvider>
+                <NavigationThemeProvider>
+                    <AppNavigator/>
+                </NavigationThemeProvider>
+            </AppLoadingProvider>
         </ThemeProvider>
     );
 }

@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "adhd-cookbook",
+		"name": "ADHD Cookbook",
 		"slug": "adhd-cookbook",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -16,10 +16,13 @@
 			"supportsTablet": true
 		},
 		"android": {
+			"package": "com.MihaiStreames.adhdcookbook",
+			"versionCode": 1,
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"permissions": []
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
