@@ -19,7 +19,7 @@ jobs:
       # Install dependencies with legacy peer deps
       - run: cd src && npm install --legacy-peer-deps
 
-      # Optional: Basic linting
+      # Lint the project
       - run: cd src && npm run lint
 
       # Build to ensure everything compiles

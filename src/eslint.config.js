@@ -7,9 +7,19 @@ import reactNativePlugin from 'eslint-plugin-react-native';
 import globals from 'globals';
 
 export default [
-    js.configs.recommended,
     {
-        files: ['**/*.{js,jsx,ts,tsx}'],
+        // Apply recommended config
+        ...js.configs.recommended,
+
+        // Specify file types to lint
+        files: [
+            '**/*.js',
+            '**/*.jsx',
+            '**/*.ts',
+            '**/*.tsx'
+        ],
+
+        // Ignore specific directories and files
         ignores: [
             'node_modules/**',
             '.expo/**',
@@ -21,6 +31,8 @@ export default [
             'babel.config.js',
             'metro.config.js'
         ],
+
+        // Language options and parser
         languageOptions: {
             parser: tsParser,
             parserOptions: {
@@ -36,12 +48,16 @@ export default [
                 ...globals.es2021,
             }
         },
+
+        // Plugins
         plugins: {
             '@typescript-eslint': tsPlugin,
             'react': reactPlugin,
             'react-hooks': reactHooksPlugin,
             'react-native': reactNativePlugin
         },
+
+        // Rules
         rules: {
             'react/react-in-jsx-scope': 'off',
             'react-native/no-inline-styles': 'warn',
@@ -51,10 +67,12 @@ export default [
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn',
         },
+
+        // React version detection
         settings: {
             react: {
                 version: 'detect',
             },
         }
-    },
+    }
 ];
