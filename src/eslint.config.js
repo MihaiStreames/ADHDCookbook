@@ -37,10 +37,10 @@ export default [
             }
         },
         plugins: {
+            '@typescript-eslint': tsPlugin,
             'react': reactPlugin,
             'react-hooks': reactHooksPlugin,
-            'react-native': reactNativePlugin,
-            '@typescript-eslint': tsPlugin
+            'react-native': reactNativePlugin
         },
         rules: {
             'react/react-in-jsx-scope': 'off',

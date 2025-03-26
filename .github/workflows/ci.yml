@@ -15,7 +15,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          
-      - run: cd src && npm install
+
+      # Install dependencies with legacy peer deps
+      - run: cd src && npm install --legacy-peer-deps
+
+      # Optional: Basic linting
       - run: cd src && npm run lint
+
+      # Build to ensure everything compiles
       - run: cd src && npm run build
