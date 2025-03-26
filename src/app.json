@@ -11,13 +11,21 @@
 			"image": "./assets/splash-icon.png",
 			"resizeMode": "contain"
 		},
+		"plugins": [
+			[
+				"expo-dev-client",
+				{
+					"launchMode": "most-recent"
+				}
+			]
+		],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.MihaiStreames.adhdcookbook",
+			"bundleIdentifier": "com.mihaistreames.adhdcookbook",
 			"buildNumber": "1"
 		},
 		"android": {
-			"package": "com.MihaiStreames.adhdcookbook",
+			"package": "com.mihaistreames.adhdcookbook",
 			"versionCode": 1,
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png"
