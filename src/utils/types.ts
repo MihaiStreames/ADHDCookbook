@@ -11,6 +11,7 @@ export interface Step {
     instruction: string;
     linkedIngredientIds: string[];
     checked?: boolean;
+    stepImage?: string;
 }
 
 export interface Recipe {
@@ -22,4 +23,9 @@ export interface Recipe {
     prepTime: string;
     cookTime: string;
     image?: string;
+    // Optional metadata to add later
+    tags?: string[];
+    notes?: string;
+    createdAt?: number;
+    updatedAt?: number;
 }

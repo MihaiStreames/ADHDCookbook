@@ -4,12 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
 import * as ImagePicker from 'expo-image-picker';
-import CheckBox from 'expo-checkbox';
-import type {Ingredient, Recipe, Step} from '../types';
+import type {Ingredient, Recipe, Step} from '../utils/types';
 import {generateUUID} from '../utils/uuid';
+import StepItem from '../components/StepItem';
 
 export default function AddRecipeScreen({navigation}) {
-    const {theme, toggleTheme, styles, colors} = useTheme();
+    const {styles, colors} = useTheme();
     const [name, setName] = useState('');
     const [currentIngredientName, setCurrentIngredientName] = useState('');
     const [currentIngredientAmount, setCurrentIngredientAmount] = useState('');
@@ -17,7 +17,6 @@ export default function AddRecipeScreen({navigation}) {
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [currentStep, setCurrentStep] = useState('');
     const [steps, setSteps] = useState<Step[]>([]);
-    const [linkingStep, setLinkingStep] = useState<string | null>(null);
     const [baseServings, setBaseServings] = useState('');
     const [prepTime, setPrepTime] = useState('');
     const [cookTime, setCookTime] = useState('');
@@ -64,39 +63,14 @@ export default function AddRecipeScreen({navigation}) {
         }
     };
 
+    const updateStep = (updatedStep: Step) => {
+        setSteps(steps.map(step =>
+            step.id === updatedStep.id ? updatedStep : step
+        ));
+    };
+
     const removeStep = (index: number) => {
         setSteps(steps.filter((_, i) => i !== index));
-    };
-
-    const startLinkingIngredients = (stepId: string) => {
-        setLinkingStep(stepId);
-    };
-
-    const toggleIngredientLink = (stepId: string, ingredientId: string) => {
-        setSteps(
-            steps.map((step) => {
-                if (step.id === stepId) {
-                    const linkedIngredientIds = [...step.linkedIngredientIds];
-                    const index = linkedIngredientIds.indexOf(ingredientId);
-
-                    if (index === -1) {
-                        linkedIngredientIds.push(ingredientId);
-                    } else {
-                        linkedIngredientIds.splice(index, 1);
-                    }
-
-                    return {
-                        ...step,
-                        linkedIngredientIds,
-                    };
-                }
-                return step;
-            })
-        );
-    };
-
-    const finishLinkingIngredients = () => {
-        setLinkingStep(null);
     };
 
     const pickImage = async () => {
@@ -136,6 +110,8 @@ export default function AddRecipeScreen({navigation}) {
             prepTime: prepTime.trim(),
             cookTime: cookTime.trim(),
             image,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
         };
 
         try {
@@ -164,13 +140,6 @@ export default function AddRecipeScreen({navigation}) {
                         </TouchableOpacity>
                         <Text style={styles.smallTitle}>Add Recipe</Text>
                     </View>
-                    <TouchableOpacity onPress={toggleTheme} style={styles.iconButton}>
-                        <Feather
-                            name={theme === 'dark' ? 'sun' : 'moon'}
-                            size={24}
-                            color={colors.foreground}
-                        />
-                    </TouchableOpacity>
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.formContainer}>
@@ -226,7 +195,7 @@ export default function AddRecipeScreen({navigation}) {
                     <View style={styles.formSection}>
                         <Text style={styles.label}>Ingredients</Text>
                         <View style={styles.row}>
-                            <View style={styles.col2}>
+                            <View style={styles.col3}>
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Ingredient name"
@@ -245,10 +214,10 @@ export default function AddRecipeScreen({navigation}) {
                                     keyboardType="numeric"
                                 />
                             </View>
-                            <View style={styles.col2}>
+                            <View style={styles.col}>
                                 <TextInput
                                     style={styles.input}
-                                    placeholder="g, ml, cups, etc."
+                                    placeholder="Unit"
                                     placeholderTextColor={colors.placeholderText}
                                     value={currentIngredientUnit}
                                     onChangeText={setCurrentIngredientUnit}
@@ -256,7 +225,7 @@ export default function AddRecipeScreen({navigation}) {
                             </View>
                         </View>
                         <TouchableOpacity style={styles.secondaryButton} onPress={addIngredient}>
-                            <Feather name="plus" size={16} color={colors.foreground}/>
+                            <Feather name="plus" size={16} color={colors.secondaryForeground}/>
                             <Text style={styles.secondaryButtonText}>Add Ingredient</Text>
                         </TouchableOpacity>
 
@@ -293,81 +262,21 @@ export default function AddRecipeScreen({navigation}) {
                             multiline
                         />
                         <TouchableOpacity style={styles.secondaryButton} onPress={addStep}>
-                            <Feather name="plus" size={16} color={colors.foreground}/>
+                            <Feather name="plus" size={16} color={colors.secondaryForeground}/>
                             <Text style={styles.secondaryButtonText}>Add Step</Text>
                         </TouchableOpacity>
 
                         {steps.length > 0 && (
-                            <View style={{marginTop: 8}}>
+                            <View style={{marginTop: 12}}>
                                 {steps.map((step, index) => (
-                                    <View key={index} style={styles.stepContainer}>
-                                        <View style={styles.stepHeader}>
-                                            <View style={styles.stepContent}>
-                                                <Text style={styles.stepNumber}>{index + 1}.</Text>
-                                                <Text style={styles.stepText}>{step.instruction}</Text>
-                                            </View>
-                                            <View style={styles.stepActions}>
-                                                {linkingStep !== step.id ? (
-                                                    <TouchableOpacity
-                                                        onPress={() => startLinkingIngredients(step.id)}
-                                                        style={{marginRight: 8}}
-                                                    >
-                                                        <Feather name="link" size={16} color={colors.foreground}/>
-                                                    </TouchableOpacity>
-                                                ) : (
-                                                    <TouchableOpacity
-                                                        onPress={finishLinkingIngredients}
-                                                        style={{marginRight: 8}}
-                                                    >
-                                                        <Feather name="link" size={16} color={colors.accentBlue}/>
-                                                    </TouchableOpacity>
-                                                )}
-                                                <TouchableOpacity onPress={() => removeStep(index)}
-                                                                  style={styles.iconButton}>
-                                                    <Feather name="x" size={16} color={colors.foreground}/>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-
-                                        {/* Linked ingredients */}
-                                        {step.linkedIngredientIds.length > 0 && !linkingStep && (
-                                            <View style={styles.linkedIngredients}>
-                                                {step.linkedIngredientIds.map(id => {
-                                                    const ingredient = ingredients.find(i => i.id === id);
-                                                    return ingredient ? (
-                                                        <View key={id} style={styles.ingredientBadge}>
-                                                            <Text style={styles.ingredientBadgeText}>
-                                                                {ingredient.name}
-                                                            </Text>
-                                                        </View>
-                                                    ) : null;
-                                                })}
-                                            </View>
-                                        )}
-
-                                        {/* Ingredient linking mode */}
-                                        {linkingStep === step.id && (
-                                            <View style={styles.linkingContainer}>
-                                                <Text style={styles.linkingTitle}>Link ingredients to this step:</Text>
-                                                {ingredients.map(ingredient => (
-                                                    <View key={ingredient.id} style={styles.linkingItem}>
-                                                        <CheckBox
-                                                            value={step.linkedIngredientIds.includes(ingredient.id)}
-                                                            onValueChange={() => toggleIngredientLink(step.id, ingredient.id)}
-                                                            color={step.linkedIngredientIds.includes(ingredient.id) ? colors.accentBlue : undefined}
-                                                        />
-                                                        <Text style={styles.linkingText}>{ingredient.name}</Text>
-                                                    </View>
-                                                ))}
-                                                <TouchableOpacity
-                                                    style={styles.doneButton}
-                                                    onPress={finishLinkingIngredients}
-                                                >
-                                                    <Text style={styles.doneButtonText}>Done</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        )}
-                                    </View>
+                                    <StepItem
+                                        key={step.id}
+                                        step={step}
+                                        index={index}
+                                        ingredients={ingredients}
+                                        onRemove={() => removeStep(index)}
+                                        onUpdateStep={updateStep}
+                                    />
                                 ))}
                             </View>
                         )}

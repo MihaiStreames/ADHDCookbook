@@ -1,198 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {
-    Alert,
-    Image,
-    Platform,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import {Alert, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View,} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
-import type {Ingredient, Recipe, Step} from '../types';
+import type {Ingredient, Recipe, Step} from '../utils/types';
 import CheckBox from 'expo-checkbox';
 
 export default function RecipeDetailScreen({route, navigation}) {
     const {recipeId} = route.params;
-    const {theme, toggleTheme} = useTheme();
+    const {styles, colors} = useTheme();
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [servings, setServings] = useState<number>(1);
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [steps, setSteps] = useState<Step[]>([]);
-
-    const isDark = theme === 'dark';
-
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
-            paddingHorizontal: 16,
-            paddingBottom: 24,
-        },
-        safeArea: {
-            flex: 1,
-            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        },
-        header: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginVertical: 16,
-        },
-        headerLeft: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            flex: 1,
-        },
-        headerActions: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        title: {
-            fontSize: 22,
-            fontWeight: 'bold',
-            color: isDark ? '#ffffff' : '#000000',
-            marginLeft: 12,
-            flex: 1,
-        },
-        image: {
-            width: '100%',
-            height: 200,
-            borderRadius: 8,
-            marginBottom: 16,
-        },
-        timeInfo: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: 16,
-            marginBottom: 16,
-        },
-        timeItem: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        timeText: {
-            fontSize: 14,
-            color: isDark ? '#bbbbbb' : '#666666',
-            marginLeft: 4,
-        },
-        servingsContainer: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: isDark ? '#333333' : '#f1f1f1',
-            borderRadius: 8,
-            padding: 12,
-            marginBottom: 24,
-        },
-        servingsLabel: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        servingsText: {
-            fontSize: 16,
-            fontWeight: '500',
-            color: isDark ? '#ffffff' : '#000000',
-            marginLeft: 8,
-        },
-        servingsControls: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        servingsButton: {
-            width: 32,
-            height: 32,
-            borderRadius: 16,
-            backgroundColor: isDark ? '#444444' : '#e0e0e0',
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        servingsValue: {
-            width: 32,
-            textAlign: 'center',
-            fontSize: 16,
-            fontWeight: '500',
-            color: isDark ? '#ffffff' : '#000000',
-        },
-        sectionTitle: {
-            fontSize: 18,
-            fontWeight: '500',
-            color: isDark ? '#ffffff' : '#000000',
-            marginBottom: 12,
-        },
-        ingredientItem: {
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            marginBottom: 8,
-        },
-        ingredientText: {
-            fontSize: 16,
-            color: isDark ? '#ffffff' : '#000000',
-            marginLeft: 12,
-            flex: 1,
-        },
-        ingredientTextChecked: {
-            textDecorationLine: 'line-through',
-            color: isDark ? '#888888' : '#999999',
-        },
-        ingredientAmount: {
-            color: isDark ? '#bbbbbb' : '#666666',
-        },
-        stepContainer: {
-            backgroundColor: isDark ? '#333333' : '#f1f1f1',
-            borderRadius: 8,
-            padding: 12,
-            marginBottom: 12,
-        },
-        stepContainerChecked: {
-            backgroundColor: isDark ? '#2a2a2a' : '#e8e8e8',
-        },
-        stepContent: {
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-        },
-        stepText: {
-            fontSize: 16,
-            color: isDark ? '#ffffff' : '#000000',
-            marginLeft: 12,
-            flex: 1,
-        },
-        stepTextChecked: {
-            textDecorationLine: 'line-through',
-            color: isDark ? '#888888' : '#999999',
-        },
-        linkedIngredients: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            marginLeft: 28,
-            marginTop: 8,
-            gap: 8,
-        },
-        ingredientBadge: {
-            backgroundColor: isDark ? '#444444' : '#e0e0e0',
-            borderRadius: 4,
-            paddingHorizontal: 8,
-            paddingVertical: 4,
-        },
-        ingredientBadgeChecked: {
-            opacity: 0.5,
-        },
-        ingredientBadgeText: {
-            fontSize: 12,
-            color: isDark ? '#ffffff' : '#000000',
-        },
-        ingredientBadgeTextChecked: {
-            textDecorationLine: 'line-through',
-        },
-        section: {
-            marginBottom: 24,
-        },
-    });
 
     useEffect(() => {
         const loadRecipe = async () => {
@@ -201,7 +21,6 @@ export default function RecipeDetailScreen({route, navigation}) {
                 if (savedRecipes) {
                     const recipes = JSON.parse(savedRecipes);
                     const foundRecipe = recipes.find((r: Recipe) => r.id === recipeId);
-
                     if (foundRecipe) {
                         setRecipe(foundRecipe);
                         setIngredients(
@@ -217,7 +36,6 @@ export default function RecipeDetailScreen({route, navigation}) {
                 console.error('Failed to load recipe:', error);
             }
         };
-
         loadRecipe();
     }, [recipeId]);
 
@@ -246,7 +64,7 @@ export default function RecipeDetailScreen({route, navigation}) {
                             console.error('Failed to delete recipe:', error);
                         }
                     },
-                },
+                }
             ]
         );
     };
@@ -278,9 +96,7 @@ export default function RecipeDetailScreen({route, navigation}) {
     const calculateAmount = (amount: string, baseServings: string) => {
         const baseAmount = Number.parseFloat(amount);
         const base = Number.parseInt(baseServings) || 1;
-
         if (isNaN(baseAmount)) return amount;
-
         const adjusted = (baseAmount / base) * servings;
         return adjusted % 1 === 0 ? adjusted.toString() : adjusted.toFixed(1);
     };
@@ -288,23 +104,16 @@ export default function RecipeDetailScreen({route, navigation}) {
     if (!recipe) {
         return (
             <SafeAreaView style={styles.safeArea}>
-                <View style={styles.container}>
+                <View style={styles.containerWithPadding}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Feather name="arrow-left" size={24} color={isDark ? '#ffffff' : '#000000'}/>
+                            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconButton}>
+                                <Feather name="arrow-left" size={24} color={colors.foreground}/>
                             </TouchableOpacity>
-                            <Text style={styles.title}>Recipe Not Found</Text>
+                            <Text style={styles.smallTitle}>Recipe Not Found</Text>
                         </View>
-                        <TouchableOpacity onPress={toggleTheme}>
-                            <Feather
-                                name={isDark ? 'sun' : 'moon'}
-                                size={24}
-                                color={isDark ? '#ffffff' : '#000000'}
-                            />
-                        </TouchableOpacity>
                     </View>
-                    <Text style={{color: isDark ? '#ffffff' : '#000000'}}>
+                    <Text style={styles.bodyText}>
                         The recipe you're looking for doesn't exist.
                     </Text>
                 </View>
@@ -314,51 +123,41 @@ export default function RecipeDetailScreen({route, navigation}) {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
+            <View style={styles.containerWithPadding}>
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Feather name="arrow-left" size={24} color={isDark ? '#ffffff' : '#000000'}/>
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconButton}>
+                            <Feather name="arrow-left" size={24} color={colors.foreground}/>
                         </TouchableOpacity>
-                        <Text style={styles.title} numberOfLines={1}>{recipe.name}</Text>
+                        <Text style={styles.smallTitle} numberOfLines={1}>{recipe.name}</Text>
                     </View>
                     <View style={styles.headerActions}>
-                        <TouchableOpacity onPress={toggleTheme} style={{marginRight: 16}}>
-                            <Feather
-                                name={isDark ? 'sun' : 'moon'}
-                                size={24}
-                                color={isDark ? '#ffffff' : '#000000'}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleDelete}>
-                            <Feather name="trash-2" size={24} color="#ff4040"/>
+                        <TouchableOpacity onPress={handleDelete} style={styles.iconButton}>
+                            <Feather name="trash-2" size={24} color={colors.destructive}/>
                         </TouchableOpacity>
                     </View>
                 </View>
-
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {recipe.image && (
-                        <Image source={{uri: recipe.image}} style={styles.image} resizeMode="cover"/>
+                        <Image source={{uri: recipe.image}} style={styles.imagePreview} resizeMode="cover"/>
                     )}
-
-                    <View style={styles.timeInfo}>
+                    <View style={{flexDirection: 'row', gap: 24, marginVertical: 16}}>
                         {recipe.prepTime && (
-                            <View style={styles.timeItem}>
-                                <Feather name="clock" size={16} color={isDark ? '#bbbbbb' : '#666666'}/>
-                                <Text style={styles.timeText}>Prep: {recipe.prepTime} min</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Feather name="clock" size={16} color={colors.mutedForeground}/>
+                                <Text style={styles.mutedText}>Prep: {recipe.prepTime} min</Text>
                             </View>
                         )}
                         {recipe.cookTime && (
-                            <View style={styles.timeItem}>
-                                <Feather name="clock" size={16} color={isDark ? '#bbbbbb' : '#666666'}/>
-                                <Text style={styles.timeText}>Cook: {recipe.cookTime} min</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Feather name="clock" size={16} color={colors.mutedForeground}/>
+                                <Text style={styles.mutedText}>Cook: {recipe.cookTime} min</Text>
                             </View>
                         )}
                     </View>
-
                     <View style={styles.servingsContainer}>
                         <View style={styles.servingsLabel}>
-                            <Feather name="users" size={20} color={isDark ? '#bbbbbb' : '#666666'}/>
+                            <Feather name="users" size={20} color={colors.mutedForeground}/>
                             <Text style={styles.servingsText}>Servings</Text>
                         </View>
                         <View style={styles.servingsControls}>
@@ -367,26 +166,29 @@ export default function RecipeDetailScreen({route, navigation}) {
                                 onPress={() => adjustServings(-1)}
                                 disabled={servings <= 1}
                             >
-                                <Feather name="minus" size={16} color={isDark ? '#ffffff' : '#000000'}/>
+                                <Feather
+                                    name="minus"
+                                    size={16}
+                                    color={servings <= 1 ? colors.disabledIcon : colors.foreground}
+                                />
                             </TouchableOpacity>
                             <Text style={styles.servingsValue}>{servings}</Text>
                             <TouchableOpacity
                                 style={styles.servingsButton}
                                 onPress={() => adjustServings(1)}
                             >
-                                <Feather name="plus" size={16} color={isDark ? '#ffffff' : '#000000'}/>
+                                <Feather name="plus" size={16} color={colors.foreground}/>
                             </TouchableOpacity>
                         </View>
                     </View>
-
-                    <View style={styles.section}>
+                    <View style={{marginBottom: 24}}>
                         <Text style={styles.sectionTitle}>Ingredients</Text>
                         {ingredients.map((ingredient) => (
-                            <View key={ingredient.id} style={styles.ingredientItem}>
+                            <View key={ingredient.id} style={styles.ingredientCheckItem}>
                                 <CheckBox
                                     value={ingredient.checked}
                                     onValueChange={() => toggleIngredientChecked(ingredient.id)}
-                                    color={ingredient.checked ? (isDark ? '#0070f3' : '#0070f3') : undefined}
+                                    color={ingredient.checked ? colors.accent : undefined}
                                 />
                                 <Text
                                     style={[
@@ -404,8 +206,7 @@ export default function RecipeDetailScreen({route, navigation}) {
                             </View>
                         ))}
                     </View>
-
-                    <View style={styles.section}>
+                    <View style={{marginBottom: 24}}>
                         <Text style={styles.sectionTitle}>Steps</Text>
                         {steps.map((step, index) => (
                             <View
@@ -419,7 +220,7 @@ export default function RecipeDetailScreen({route, navigation}) {
                                     <CheckBox
                                         value={step.checked}
                                         onValueChange={() => toggleStepChecked(step.id)}
-                                        color={step.checked ? (isDark ? '#0070f3' : '#0070f3') : undefined}
+                                        color={step.checked ? colors.accent : undefined}
                                     />
                                     <Text
                                         style={[
@@ -431,6 +232,17 @@ export default function RecipeDetailScreen({route, navigation}) {
                                         {step.instruction}
                                     </Text>
                                 </View>
+
+                                {/* Display step image if available */}
+                                {step.stepImage && (
+                                    <View style={styles.stepImageContainer}>
+                                        <Image
+                                            source={{uri: step.stepImage}}
+                                            style={styles.stepImage}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                )}
 
                                 {step.linkedIngredientIds.length > 0 && (
                                     <View style={styles.linkedIngredients}>

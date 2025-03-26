@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, SafeAreaView, Switch, Text, TouchableOpacity, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Feather} from '@expo/vector-icons';
 import {useTheme} from '../context/ThemeContext';
-import type {Recipe} from '../types';
+import type {Recipe} from '../utils/types';
 
 export default function HomeScreen({navigation}) {
-    const {theme, toggleTheme, styles, colors} = useTheme();
+    const {theme, toggleTheme, styles, colors, isUsingDeviceTheme, setUseDeviceTheme} = useTheme();
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [showThemeOptions, setShowThemeOptions] = useState(false);
 
     useEffect(() => {
         const loadRecipes = async () => {
@@ -70,7 +71,7 @@ export default function HomeScreen({navigation}) {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Your Recipes</Text>
-                    <TouchableOpacity onPress={toggleTheme} style={styles.iconButton}>
+                    <TouchableOpacity onPress={() => setShowThemeOptions(!showThemeOptions)} style={styles.iconButton}>
                         <Feather
                             name={theme === 'dark' ? 'sun' : 'moon'}
                             size={24}
@@ -78,6 +79,82 @@ export default function HomeScreen({navigation}) {
                         />
                     </TouchableOpacity>
                 </View>
+
+                {/* Theme Options Panel */}
+                {showThemeOptions && (
+                    <View style={{
+                        backgroundColor: colors.card,
+                        borderRadius: 12,
+                        padding: 16,
+                        marginBottom: 16,
+                        borderWidth: 1,
+                        borderColor: colors.cardBorder,
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: 16
+                        }}>
+                            <Text style={styles.sectionTitle}>Use Device Theme</Text>
+                            <Switch
+                                value={isUsingDeviceTheme}
+                                onValueChange={setUseDeviceTheme}
+                                trackColor={{false: colors.muted, true: colors.accent}}
+                                thumbColor={colors.background}
+                            />
+                        </View>
+
+                        {!isUsingDeviceTheme && (
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TouchableOpacity
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: theme === 'light' ? colors.accent : colors.secondary,
+                                        borderRadius: 8,
+                                        padding: 12,
+                                        alignItems: 'center',
+                                        marginRight: 8
+                                    }}
+                                    onPress={toggleTheme}
+                                >
+                                    <Text
+                                        style={{
+                                            color: theme === 'light'
+                                                ? colors.accentForeground
+                                                : colors.secondaryForeground,
+                                            fontWeight: '500'
+                                        }}
+                                    >
+                                        Light
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: theme === 'dark' ? colors.accent : colors.secondary,
+                                        borderRadius: 8,
+                                        padding: 12,
+                                        alignItems: 'center',
+                                        marginLeft: 8
+                                    }}
+                                    onPress={toggleTheme}
+                                >
+                                    <Text
+                                        style={{
+                                            color: theme === 'dark'
+                                                ? colors.accentForeground
+                                                : colors.secondaryForeground,
+                                            fontWeight: '500'
+                                        }}
+                                    >
+                                        Dark
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    </View>
+                )}
 
                 {recipes.length === 0 ? (
                     <View style={styles.emptyContainer}>
@@ -100,7 +177,7 @@ export default function HomeScreen({navigation}) {
                     style={styles.fab}
                     onPress={() => navigation.navigate('AddRecipe')}
                 >
-                    <Feather name="plus" size={24} color={colors.accentBlue}/>
+                    <Feather name="plus" size={24} color={colors.accentForeground}/>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

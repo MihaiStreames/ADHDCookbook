@@ -1,6 +1,6 @@
 import {Platform, StatusBar, StyleSheet} from 'react-native';
 
-// Define theme types
+// Theme types
 export type ThemeType = 'light' | 'dark';
 
 // Theme colors
@@ -12,48 +12,48 @@ export const themeColors = {
         cardBorder: '#EEEEEE',
         muted: '#F5F5F5',
         mutedForeground: '#666666',
-        primary: '#000000',
+        primary: '#333333',
         primaryForeground: '#FFFFFF',
         secondary: '#F0F0F0',
         secondaryForeground: '#000000',
-        accent: '#F0F0F0',
-        accentForeground: '#000000',
+        accent: '#555555',
+        accentForeground: '#FFFFFF',
         destructive: '#FF3B30',
         destructiveForeground: '#FFFFFF',
         border: '#EEEEEE',
         input: '#F5F5F5',
-        accentBlue: '#0070f3',
+        accentPrimary: '#555555',
         placeholderText: '#999999',
         ingredientAmount: '#666666',
         cardBackground: '#f1f1f1',
         imageBackground: '#f5f5f5',
-        icon: '#cccccc',
+        icon: '#555555',
         disabledIcon: '#cccccc',
     },
     dark: {
-        background: '#1a1a1a',
+        background: '#121212',
         foreground: '#ffffff',
-        card: '#333333',
-        cardBorder: '#444444',
+        card: '#1E1E1E',
+        cardBorder: '#333333',
         muted: '#2A2A2A',
         mutedForeground: '#BBBBBB',
-        primary: '#FFF5F5',
+        primary: '#B3B3B3',
         primaryForeground: '#121212',
         secondary: '#2A2A2A',
-        secondaryForeground: '#FFF5F5',
-        accent: '#2A2A2A',
-        accentForeground: '#FFF5F5',
+        secondaryForeground: '#E0E0E0',
+        accent: '#777777',
+        accentForeground: '#FFFFFF',
         destructive: '#FF453A',
-        destructiveForeground: '#FFF5F5',
+        destructiveForeground: '#FFFFFF',
         border: '#333333',
         input: '#2A2A2A',
-        accentBlue: '#0070f3',
-        placeholderText: '#888888',
+        accentPrimary: '#777777',
+        placeholderText: '#777777',
         ingredientAmount: '#bbbbbb',
-        cardBackground: '#333333',
-        imageBackground: '#444444',
-        icon: '#555555',
-        disabledIcon: '#555555',
+        cardBackground: '#1E1E1E',
+        imageBackground: '#333333',
+        icon: '#777777',
+        disabledIcon: '#444444',
     }
 };
 
@@ -127,6 +127,7 @@ export const createStyles = (theme: ThemeType) => {
         mutedText: {
             fontSize: 14,
             color: colors.mutedForeground,
+            marginLeft: 8,
         },
 
         // Form styles
@@ -137,14 +138,14 @@ export const createStyles = (theme: ThemeType) => {
             marginBottom: 24,
         },
         input: {
-            backgroundColor: colors.card,
+            backgroundColor: colors.input,
             borderRadius: 8,
             padding: 12,
             color: colors.foreground,
             marginBottom: 8,
         },
         textArea: {
-            backgroundColor: colors.card,
+            backgroundColor: colors.input,
             borderRadius: 8,
             padding: 12,
             color: colors.foreground,
@@ -163,22 +164,25 @@ export const createStyles = (theme: ThemeType) => {
         col2: {
             flex: 2,
         },
+        col3: {
+            flex: 3,
+        },
 
         // Button styles
         primaryButton: {
-            backgroundColor: colors.accentBlue,
+            backgroundColor: colors.accent,
             borderRadius: 8,
             padding: 16,
             alignItems: 'center',
             marginTop: 16,
         },
         primaryButtonText: {
-            color: '#ffffff',
+            color: colors.accentForeground,
             fontWeight: '500',
             fontSize: 16,
         },
         secondaryButton: {
-            backgroundColor: colors.card,
+            backgroundColor: colors.secondary,
             borderRadius: 8,
             padding: 12,
             flexDirection: 'row',
@@ -186,7 +190,7 @@ export const createStyles = (theme: ThemeType) => {
             alignItems: 'center',
         },
         secondaryButtonText: {
-            color: colors.foreground,
+            color: colors.secondaryForeground,
             marginLeft: 8,
             fontWeight: '500',
         },
@@ -223,16 +227,16 @@ export const createStyles = (theme: ThemeType) => {
         recipeDetails: {
             flexDirection: 'row',
             marginTop: 8,
+            gap: 16,
         },
         recipeDetail: {
             flexDirection: 'row',
             alignItems: 'center',
-            marginRight: 16,
         },
         recipeDetailText: {
             fontSize: 14,
             color: colors.mutedForeground,
-            marginLeft: 4,
+            marginLeft: 8,
         },
 
         // Empty state
@@ -262,12 +266,13 @@ export const createStyles = (theme: ThemeType) => {
         ingredientCheckItem: {
             flexDirection: 'row',
             alignItems: 'flex-start',
-            marginBottom: 8,
+            marginBottom: 12,
+            paddingVertical: 4,
         },
         ingredientText: {
             color: colors.foreground,
             flex: 1,
-            marginLeft: 12,
+            marginLeft: 16,
         },
         ingredientAmount: {
             color: colors.ingredientAmount,
@@ -281,8 +286,8 @@ export const createStyles = (theme: ThemeType) => {
         stepContainer: {
             backgroundColor: colors.card,
             borderRadius: 8,
-            padding: 12,
-            marginBottom: 8,
+            padding: 16,
+            marginBottom: 16,
         },
         stepContainerChecked: {
             backgroundColor: colors.muted,
@@ -291,6 +296,7 @@ export const createStyles = (theme: ThemeType) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
+            marginBottom: 8,
         },
         stepContent: {
             flexDirection: 'row',
@@ -305,6 +311,7 @@ export const createStyles = (theme: ThemeType) => {
         stepText: {
             color: colors.foreground,
             flex: 1,
+            marginLeft: 12,
         },
         stepTextChecked: {
             textDecorationLine: 'line-through',
@@ -314,13 +321,33 @@ export const createStyles = (theme: ThemeType) => {
             flexDirection: 'row',
         },
 
+        // Step image styles
+        stepImageContainer: {
+            marginTop: 12,
+            marginBottom: 8,
+            borderRadius: 8,
+            overflow: 'hidden',
+            backgroundColor: colors.imageBackground,
+            height: 150,
+        },
+        stepImage: {
+            width: '100%',
+            height: '100%',
+        },
+        stepImageButton: {
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+
         // Badge styles
         linkedIngredients: {
             flexDirection: 'row',
             flexWrap: 'wrap',
             marginTop: 8,
             gap: 8,
-            marginLeft: 28,
+            marginLeft: 36,
         },
         ingredientBadge: {
             backgroundColor: colors.muted,
@@ -341,7 +368,8 @@ export const createStyles = (theme: ThemeType) => {
 
         // Linking styles
         linkingContainer: {
-            marginTop: 8,
+            marginTop: 12,
+            marginLeft: 36,
         },
         linkingTitle: {
             fontSize: 14,
@@ -352,21 +380,22 @@ export const createStyles = (theme: ThemeType) => {
         linkingItem: {
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: 8,
+            marginBottom: 10,
+            paddingVertical: 2,
         },
         linkingText: {
             color: colors.foreground,
-            marginLeft: 8,
+            marginLeft: 12,
         },
         doneButton: {
-            backgroundColor: colors.accentBlue,
+            backgroundColor: colors.accent,
             borderRadius: 8,
-            padding: 8,
+            padding: 10,
             alignItems: 'center',
-            marginTop: 8,
+            marginTop: 12,
         },
         doneButtonText: {
-            color: '#ffffff',
+            color: colors.accentForeground,
             fontWeight: '500',
         },
 
@@ -413,7 +442,7 @@ export const createStyles = (theme: ThemeType) => {
             alignItems: 'center',
             backgroundColor: colors.card,
             borderRadius: 8,
-            padding: 12,
+            padding: 16,
             marginBottom: 24,
         },
         servingsLabel: {
@@ -424,7 +453,7 @@ export const createStyles = (theme: ThemeType) => {
             fontSize: 16,
             fontWeight: '500',
             color: colors.foreground,
-            marginLeft: 8,
+            marginLeft: 12,
         },
         servingsControls: {
             flexDirection: 'row',
@@ -439,7 +468,7 @@ export const createStyles = (theme: ThemeType) => {
             alignItems: 'center',
         },
         servingsValue: {
-            width: 32,
+            width: 36, // Increased width
             textAlign: 'center',
             fontSize: 16,
             fontWeight: '500',
@@ -454,9 +483,7 @@ export const createStyles = (theme: ThemeType) => {
             width: 56,
             height: 56,
             borderRadius: 28,
-            backgroundColor: colors.background,
-            borderWidth: 1,
-            borderColor: colors.accentBlue,
+            backgroundColor: colors.accent,
             justifyContent: 'center',
             alignItems: 'center',
             elevation: 4,
@@ -466,4 +493,4 @@ export const createStyles = (theme: ThemeType) => {
             shadowRadius: 3.84,
         },
     });
-};
+}
