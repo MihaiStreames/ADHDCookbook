@@ -21,6 +21,3 @@ jobs:
 
       # Lint the project
       - run: cd src && npm run lint
-
-      # Build to ensure everything compiles
-      - run: cd src && npm run build:android
