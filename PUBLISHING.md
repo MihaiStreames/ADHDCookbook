@@ -17,8 +17,8 @@ This document outlines the process for creating new releases and publishing the 
 
 1. Build the release candidate
    ```bash
-   expo build:android --release-channel prod-X.Y.Z
-   expo build:ios --release-channel prod-X.Y.Z
+   eas build -p android --release-channel prod-X.Y.Z
+   eas build -p ios --release-channel prod-X.Y.Z
    ```
 2. Perform testing on the release builds
 3. Fix any critical issues on the release branch
@@ -43,7 +43,7 @@ This document outlines the process for creating new releases and publishing the 
 
 1. Generate a signed AAB
    ```bash
-   expo build:android --release-channel prod-X.Y.Z --app-bundle
+   eas build -p android --release-channel prod-X.Y.Z --app-bundle
    ```
 2. Download the AAB from Expo
 3. Upload to Google Play Console
@@ -54,7 +54,7 @@ This document outlines the process for creating new releases and publishing the 
 
 1. Generate a signed IPA
    ```bash
-   expo build:ios --release-channel prod-X.Y.Z
+   eas build -p ios --release-channel prod-X.Y.Z
    ```
 2. Download the IPA from Expo
 3. Upload to App Store Connect using Transporter or Application Loader

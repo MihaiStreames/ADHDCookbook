@@ -9,9 +9,9 @@
 - Ingredient linking to steps
 - Visual aids with photo support for steps
 - Check-off system for completed steps
-- Servings calculator
-- Dark mode support
-- Offline functionality
+- Servings calculator (basic)
+- Dark mode support (system dependent)
+- Offline functionality (local storage)
 
 ### Technical
 
