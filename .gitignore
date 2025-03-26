@@ -2,6 +2,7 @@
 
 # Dependencies
 src/node_modules/
+/src/android/
 
 # Expo
 .expo/

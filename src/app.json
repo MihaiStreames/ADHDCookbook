@@ -9,8 +9,7 @@
 		"newArchEnabled": true,
 		"splash": {
 			"image": "./assets/splash-icon.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+			"resizeMode": "contain"
 		},
 		"ios": {
 			"supportsTablet": true,
@@ -21,8 +20,7 @@
 			"package": "com.MihaiStreames.adhdcookbook",
 			"versionCode": 1,
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#ffffff"
+				"foregroundImage": "./assets/adaptive-icon.png"
 			},
 			"permissions": []
 		},
@@ -31,15 +29,15 @@
 		},
 		"extra": {
 			"eas": {
-				"projectId": "your-eas-project-id-here"
+				"projectId": "e9a4aa85-b6a2-4778-a91f-0684fe4a8e91"
 			}
 		},
 		"updates": {
-			"fallbackToCacheTimeout": 0,
-			"url": "https://u.expo.dev/your-eas-project-id-here"
+			"url": "https://u.expo.dev/e9a4aa85-b6a2-4778-a91f-0684fe4a8e91"
 		},
 		"runtimeVersion": {
 			"policy": "sdkVersion"
-		}
+		},
+		"owner": "mihaistreames"
 	}
 }
