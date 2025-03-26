@@ -1,15 +1,15 @@
-import js from '@eslint/js';
+import {configs} from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactNativePlugin from 'eslint-plugin-react-native';
-import globals from 'globals';
+import {browser, es2021, node} from 'globals';
 
 export default [
     {
         // Apply recommended config
-        ...js.configs.recommended,
+        ...configs.recommended,
 
         // Specify file types to lint
         files: [
@@ -43,9 +43,9 @@ export default [
                 sourceType: 'module',
             },
             globals: {
-                ...globals.browser,
-                ...globals.node,
-                ...globals.es2021,
+                ...browser,
+                ...node,
+                ...es2021,
             }
         },
 
