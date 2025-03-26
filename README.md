@@ -1,7 +1,24 @@
 # ADHD Cookbook
 
-ADHD Cookbook is a mobile app designed specifically for people with ADHD to make cooking easier and more manageable. The
-app breaks down cooking into clear, distraction-friendly steps and helps you stay on track while preparing meals.
+ADHD Cookbook is a mobile app I built to make cooking more manageable for myself and others with ADHD. After struggling
+with overwhelming recipe websites and complicated instructions, I created this distraction-friendly cooking app that
+breaks everything down into clear, manageable steps.
+
+## Why I Made This
+
+As someone with ADHD, cooking from traditional recipes is often frustrating:
+
+- Getting lost in long paragraphs of instructions
+- Forgetting where I left off when distracted
+- Losing track of which ingredients I need for each step
+- Getting overwhelmed by too much information at once
+
+This app addresses all these issues by presenting cooking in an ADHD-friendly way:
+
+- **One step at a time:** See only what you need to focus on now
+- **Visual cues:** Photos for each step make instructions clearer
+- **Ingredient linking:** Each step shows exactly which ingredients you need right now
+- **Progress tracking:** Check off completed steps so you never lose your place
 
 ## Features
 
@@ -13,19 +30,24 @@ app breaks down cooking into clear, distraction-friendly steps and helps you sta
 - **Dark Mode**: Reduce eye strain with light/dark themes
 - **Complete Offline Support**: No internet required to use the app
 
-## Screenshots
-
-[Screenshots will go here]
-
 ## Installation
 
-### Prerequisites
+### Download
+
+The app is available on:
+
+- [Google Play Store](#) (coming soon)
+- [Apple App Store](#) (coming soon)
+
+### Build From Source
+
+#### Prerequisites
 
 - Node.js (14.0 or later)
 - npm or Yarn
 - Expo CLI (`npm install -g expo-cli`)
 
-### Setup
+#### Setup
 
 1. Clone the repository:
 
@@ -75,22 +97,9 @@ npm run ios
 
 ## Contributing
 
-Contributions are welcome! If you'd like to help improve ADHD Cookbook, please check out
-our [Contributing Guidelines](CONTRIBUTING.md).
-
-### Development Guidelines
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+I welcome contributions to make ADHD Cookbook even better! If you'd like to help, please check out
+the [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Created for and inspired by the ADHD community (me)
-- Built with Expo and React Native
