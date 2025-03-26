@@ -5,7 +5,7 @@
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
-		"userInterfaceStyle": "light",
+		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"splash": {
 			"image": "./assets/splash-icon.png",
@@ -13,7 +13,9 @@
 			"backgroundColor": "#ffffff"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.MihaiStreames.adhdcookbook",
+			"buildNumber": "1"
 		},
 		"android": {
 			"package": "com.MihaiStreames.adhdcookbook",
@@ -26,6 +28,18 @@
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "your-eas-project-id-here"
+			}
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0,
+			"url": "https://u.expo.dev/your-eas-project-id-here"
+		},
+		"runtimeVersion": {
+			"policy": "sdkVersion"
 		}
 	}
 }
