@@ -13,6 +13,7 @@ import ImagePickerComponent from '../components/ImagePicker';
 import IngredientList from '../components/IngredientList';
 import StepList from '../components/StepList';
 
+// TODO: Central navigation types file
 export default function AddRecipeScreen({navigation}) {
     const {styles, colors} = useTheme();
     const [name, setName] = useState('');

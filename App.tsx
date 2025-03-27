@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StatusBar} from 'react-native';
 
@@ -21,6 +21,7 @@ const AppNavigator = () => {
 
     // Custom navigation theme
     const navigationTheme = {
+        ...DefaultTheme,
         dark: theme === 'dark',
         colors: {
             primary: colors.primary,
@@ -45,7 +46,6 @@ const AppNavigator = () => {
                     contentStyle: {backgroundColor: colors.background},
                     animation: 'fade_from_bottom',
                     animationDuration: 200,
-                    // This prevents the white flash during transitions
                     presentation: 'card',
                 }}
             >

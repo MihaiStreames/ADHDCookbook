@@ -11,6 +11,7 @@ import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 import ThemeSettings from '../components/ThemeSettings';
 
+// TODO: Central navigation types file
 export default function HomeScreen({navigation}) {
     const {theme, styles, colors} = useTheme();
     const [recipes, setRecipes] = useState<Recipe[]>([]);

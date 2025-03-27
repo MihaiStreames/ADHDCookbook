@@ -12,6 +12,8 @@ import IngredientList from '../components/IngredientList';
 import StepList from '../components/StepList';
 import ServingsControl from '../components/ServingsControl';
 
+// TODO: Central navigation types file
+// TODO: Central route types file
 export default function RecipeDetailScreen({route, navigation}) {
     const {recipeId} = route.params;
     const {styles, colors} = useTheme();
