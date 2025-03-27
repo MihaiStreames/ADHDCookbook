@@ -1,8 +1,8 @@
 # ADHD Cookbook
 
 ADHD Cookbook is a mobile app I built to make cooking more manageable for myself and others with ADHD. After struggling
-with overwhelming recipe websites and complicated instructions, I created this distraction-friendly cooking app that
-breaks everything down into clear, manageable steps.
+with overwhelming recipe websites and (sometimes) complicated instructions, I created this distraction-friendly cooking
+app that breaks everything down into clear, manageable steps.
 
 ## Why I Made This
 
@@ -20,16 +20,6 @@ This app addresses all these issues by presenting cooking in an ADHD-friendly wa
 - **Ingredient linking:** Each step shows exactly which ingredients you need right now
 - **Progress tracking:** Check off completed steps so you never lose your place
 
-## Features
-
-- **Step-by-Step Instructions**: Each cooking step is presented individually to reduce overwhelm
-- **Ingredient Linking**: Steps show exactly which ingredients you need for that step
-- **Visual Aids**: Add photos to steps to make instructions clearer
-- **Check-off System**: Mark completed steps to keep your place
-- **Servings Calculator**: Automatically adjusts ingredient quantities
-- **Dark Mode**: Reduce eye strain with light/dark themes
-- **Complete Offline Support**: No internet required to use the app
-
 ## Installation
 
 ### Download
@@ -43,8 +33,8 @@ The app is available on:
 
 #### Prerequisites
 
-- Node.js (14.0 or later)
-- npm or Yarn
+- Node.js
+- npm
 - Expo CLI (`npm install -g expo-cli`)
 
 #### Setup
@@ -60,16 +50,12 @@ cd ADHD.Cookbook/src/
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
 3. Start the development server:
 
 ```bash
 npm start
-# or
-yarn start
 ```
 
 4. Open the app on your device using Expo Go, or run on a simulator/emulator:
@@ -80,25 +66,12 @@ npm run android
 npm run ios
 ```
 
-## Tech Stack
-
-- React Native
-- Expo
-- TypeScript
-- AsyncStorage for local data persistence
-- React Navigation for screen navigation
-
 ## Roadmap
 
 - [ ] Recipe categorization and tags
 - [ ] Shopping list generation
 - [ ] Cloud sync for recipes across devices
 - [ ] Import recipes from websites
-
-## Contributing
-
-I welcome contributions to make ADHD Cookbook even better! If you'd like to help, please check out
-the [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
